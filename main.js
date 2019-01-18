@@ -8,49 +8,74 @@ canvas.height = window.innerHeight;
 // get context
 var ctx = canvas.getContext("2d");
 
-// draw rectangle
-ctx.fillRect(100, 100, 100, 100);
-ctx.fillRect(200, 200, 100, 100);
+// Circle class
+class Circle {
+  constructor(posX, posY, radius, speedX, speedY) {
+    this.posX = posX;
+    this.posY = posY;
+    this.radius = radius;
+    this.speedX = speedX;
+    this.speedY = speedY;
+  }
 
-ctx.fillStyle = "red";
-ctx.fillRect(200, 100, 100, 100);
-ctx.fillRect(100, 200, 100, 100);
+  // Draw circle
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.posX, this.posY, this.radius, 0, Math.PI * 2);
+    ctx.strokeStyle = "black";
+    ctx.stroke();
+    ctx.fillStyle = "black";
+    ctx.fill();
+  }
 
-// draw circle
-ctx.arc(200, 200, 50, 0, Math.PI * 2);
-ctx.strokeStyle = "yellow";
-ctx.stroke();
-ctx.fillStyle = "yellow";
-ctx.fill();
+  // Update
+  update() {
+    if (this.posX + this.radius > window.innerWidth || this.posX - this.radius < 0) {
+      this.speedX = -this.speedX;
+    }
 
-// draw line
-ctx.beginPath();
-ctx.moveTo(0, 200);
-ctx.lineTo(200, 400);
-ctx.lineTo(400, 400);
-ctx.strokeStyle = "black";
-ctx.stroke();
+    if (this.posY + this.radius > window.innerHeight || this.posY - this.radius < 0) {
+      this.speedY = -this.speedY;
+    }
 
-// draw triangle
-ctx.beginPath();
-ctx.moveTo(400, 400);
-ctx.lineTo(500, 300);
-ctx.lineTo(600, 400);
-ctx.lineTo(400, 400);
-ctx.stroke();
-ctx.fillStyle = "blue";
-ctx.fill();
+    this.posX = this.posX + this.speedX;
+    this.posY = this.posY + this.speedY;
+  }
+}
 
-// draw 100 circles
+// Circle array
+var circleArr = [];
+
+// generate random circles
 for (var i = 0; i < 100; i++) {
   var posX = Math.random() * window.innerWidth;
   var posY = Math.random() * window.innerHeight;
   var radius = Math.random() * 50;
+  var speedX = Math.random() * 5;
+  var speedY = Math.random() * 5;
 
-  ctx.beginPath();
-  ctx.arc(posX, posY, radius, 0, Math.PI * 2);
-  ctx.strokeStyle = "rgba(0, 0, 255, 0.3)";
-  ctx.stroke();
-  ctx.fillStyle = "rgba(0, 0, 255, 0.3)";
-  ctx.fill();
+  // create circle object from Circle class
+  var circle = new Circle(posX, posY, radius, speedX, speedY);
+
+  // push new circle object to circle array
+  circleArr.push(circle);
 }
+
+// Animation controller
+function animation() {
+
+  // Clear canvas
+  ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+  // update circle
+  for (var i = 0; i < circleArr.length; i++) {
+    circleArr[i].draw();
+    circleArr[i].update();
+  }
+
+  // refresh screen with window.requestAnimationFrame()
+  window.requestAnimationFrame(animation);
+}
+
+// call animation()
+animation();
