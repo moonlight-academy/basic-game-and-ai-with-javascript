@@ -101,7 +101,7 @@ class Snake {
   }
 }
 
-// Circle array
+// create snake object from Snake class
 var snake = new Snake(100, 100, 25);
 
 // Animation controller
