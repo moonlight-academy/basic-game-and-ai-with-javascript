@@ -28,7 +28,7 @@ class Snake {
     }
   }
 
-  // Draw circle
+  // Draw snake
   draw() {
     // display snake head
     ctx.fillStyle = "green";
@@ -43,7 +43,9 @@ class Snake {
     }
   }
 
-  // move left
+  /**
+   * moveLeft
+   */
   moveLeft() {
     this.posX = this.posX - this.scale;
     if (this.posX < 0) {
@@ -52,6 +54,9 @@ class Snake {
     this.updateTail();
   }
 
+  /**
+   * moveRight
+   */
   moveRight() {
     this.posX = this.posX + this.scale;
     if (this.posX >= canvas.width) {
@@ -60,6 +65,9 @@ class Snake {
     this.updateTail();
   }
 
+  /**
+   * moveUp
+   */
   moveUp() {
     this.posY = this.posY - this.scale;
     if (this.posY < 0) {
@@ -68,6 +76,9 @@ class Snake {
     this.updateTail();
   }
 
+  /**
+   * moveDown
+   */
   moveDown() {
     this.posY = this.posY + this.scale;
     if (this.posY >= canvas.height) {
@@ -76,7 +87,10 @@ class Snake {
     this.updateTail();
   }
 
-  // update snake tail position
+  /**
+   * updateTail
+   * update snake tail position
+   */
   updateTail() {
     // move the last tail position to the first position
     // and shift the others to the right
